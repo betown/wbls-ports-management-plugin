@@ -239,7 +239,6 @@ class Lineup_List extends WP_List_Table {
 
       <?php $this->review_uploaded_files(); ?>
 
-      The pagination number is <?php var_dump(get_user_option('edit_post_per_page')) ?>
       <div id="poststuff">
         <div id="post-body" class="metabox-holder">
           <div id="post-body-content">
