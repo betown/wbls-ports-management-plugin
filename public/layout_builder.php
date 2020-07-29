@@ -55,6 +55,7 @@ class Layout_Builder {
         'bunkers' => $port_item->bunkers,
         'water_availability' => $port_item->water_availability,
         'garbage_disposal' => $port_item->garbage_disposal,
+        'crushing' => $port_item->crushing,
         'truck' => $port_item->truck,
         'lineup' => $this->get_lineup($port_item->port, $port_item->terminal)
       );

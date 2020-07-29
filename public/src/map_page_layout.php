@@ -1,4 +1,4 @@
-<main>
+<main id="interactive-map-layout">
   <div class="container-fluid">
     <div class="row position-relative app-wrapper">
       <div class="d-xs-flex d-lg-none">
@@ -596,7 +596,7 @@
           $counter = 0;
           foreach ($port_list['ports'] as $port => $port_data):
           ?>
-          <div class="modal fade" id="<?php echo sanitize_title_with_dashes($port) . '-modal';?>" tabindex="-1" role="dialog" aria-labelledby="<?php echo sanitize_title_with_dashes($port) . '-label';?>" aria-hidden="true">
+          <div class="modal fade modal--port" id="<?php echo sanitize_title_with_dashes($port) . '-modal';?>" tabindex="-1" role="dialog" aria-labelledby="<?php echo sanitize_title_with_dashes($port) . '-label';?>" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header px-0">
@@ -700,7 +700,7 @@
                                       <td><?php echo $terminal['bunkers'];?></td>
                                       <td><?php echo $terminal['water_availability'];?></td>
                                       <td><?php echo $terminal['garbage_disposal'];?></td>
-                                      <td>Este no estaba en el excel</td>
+                                      <td><?php echo $terminal['crushing'];?></td>
                                     </tr>
                                     </tbody>
                                   </table>

@@ -33,6 +33,7 @@
         bunkers tinytext NOT NULL,
         water_availability tinytext NOT NULL,
         garbage_disposal tinytext NOT NULL,
+        crushing tinytext NOT NULL,
         truck tinyint NOT NULL,
         PRIMARY KEY (id)
         ) $charset_collate;";

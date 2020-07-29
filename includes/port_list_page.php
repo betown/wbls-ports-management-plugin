@@ -154,6 +154,7 @@ class Ports_List extends WP_List_Table {
       'bunkers' => __('Bunkers', 'wbls'),
       'water_availability' => __('Water Availability', 'wbls'),
       'garbage_disposal' => __('Garbage Disposal', 'wbls'),
+      'crushing' => __('Crushing', 'wbls'),
       'truck' => __('Truck', 'wbls')
     ];
 
@@ -249,8 +250,6 @@ class Ports_List extends WP_List_Table {
       </form>
 
       <?php $this->review_uploaded_files(); ?>
-      <?php var_dump(get_user_option('ports_per_page'));
-      ?>
       <div id="poststuff">
         <div id="post-body" class="metabox-holder">
           <div id="post-body-content">
@@ -306,7 +305,8 @@ class Ports_List extends WP_List_Table {
           $bunkers = !empty($csvData[19]) ? $csvData[19] : "N/A";
           $water_availability = !empty($csvData[20]) ? $csvData[20] : "N/A";
           $garbage_disposal = !empty($csvData[21]) ? $csvData[21] : "N/A";
-          $truck = !empty($csvData[22]) ? $csvData[22] : "";
+          $crushing = !empty($csvData[22]) ? $csvData[22] : "N/A";
+          $truck = !empty($csvData[23]) ? $csvData[23] : "";
 
           $wpdb->insert($tablename, array(
             'port' => $port,
@@ -331,6 +331,7 @@ class Ports_List extends WP_List_Table {
             'bunkers' => $bunkers,
             'water_availability' => $water_availability,
             'garbage_disposal' => $garbage_disposal,
+            'crushing' => $crushing,
             'truck' => $truck
           ));
         }
