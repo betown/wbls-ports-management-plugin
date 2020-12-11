@@ -10,9 +10,6 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 class Ports_List extends WP_List_Table {
 	/** Class constructor */
 	public function __construct() {
-    $uploaded_notice;
-    $notice_error;
-
 		parent::__construct( [
 			'singular' => __( 'Puerto', 'wbl' ), //singular name of the listed records
 			'plural'   => __( 'Puertos', 'wbl' ), //plural name of the listed records
@@ -134,6 +131,7 @@ class Ports_List extends WP_List_Table {
       'cb' => '<input type="checkbox" />',
       'port' => __('Port', 'wbls'),
       'terminal' => __('Terminal', 'wbls'),
+      'dock' => __('Dock', 'wbls'),
       'daily_draft_mts' => __('Daily Draft (METERS)', 'wbls'),
       'daily_draft_feets' => __('Daily Draft (FEET)', 'wbls'),
       'water_density' => __('Water Density', 'wbls'),
@@ -142,19 +140,21 @@ class Ports_List extends WP_List_Table {
       'max_loa' => __('Max Loa', 'wbls'),
       'max_beam' => __('Max Beam', 'wbls'),
       'depth_alongside' => __('Depth Alongside', 'wbls'),
-      'max_sailing_draft' => __('Max Sailing Draft', 'wbls'),
+      'max_draft' => __('Max Draft', 'wbls'),
       'airdraft' => __('Airdraft', 'wbls'),
       'storage_capacity' => __('Storage Capacity', 'wbls'),
-      'loading_rate' => __('Loading Rate', 'wbls'),
+      'loading_rates' => __('Loading Rates', 'wbls'),
+      'discharging_rates' => __('Discharging Rates', 'wbls'),
       'method_of_loading' => __('Method of Loading', 'wbls'),
-      'frontage' => __('Frontage', 'wbls'),
+      'method_of_discharging' => __('Method of Discharging', 'wbls'),
+      'frontage_dolphins' => __('Frontage Dolphins', 'wbls'),
       'tide_restriction' => __('Tide Restriction', 'wbls'),
-      'sailing_restriction' => __('Night Arrival / Sailing Restriction', 'wbls'),
+      'night_arrival_sailing_restriction' => __('Night Arrival / Sailing Restriction', 'wbls'),
       'average_congestion' => __('Average Congestion', 'wbls'),
       'bunkers' => __('Bunkers', 'wbls'),
       'water_availability' => __('Water Availability', 'wbls'),
-      'garbage_disposal' => __('Garbage Disposal', 'wbls'),
-      'crushing' => __('Crushing', 'wbls'),
+      'garbage_collection_compulsory' => __('Garbage Collection Compulsory', 'wbls'),
+      'crushing_capacity' => __('Crushing Capacity', 'wbls'),
       'truck' => __('Truck', 'wbls')
     ];
 
@@ -285,32 +285,36 @@ class Ports_List extends WP_List_Table {
 
           $port = !empty($csvData[0]) ? $csvData[0] : "";
           $terminal = !empty($csvData[1]) ? $csvData[1] : "";
-          $daily_draft_mts = !empty($csvData[2]) ? $csvData[2] : "";
-          $daily_draft_feets = !empty($csvData[3]) ? $csvData[3] : "";
-          $water_density = !empty($csvData[4]) ? $csvData[4] : "";
-          $waiting_time = !empty($csvData[5]) ? $csvData[5] : "";
-          $waiting_time_projected = !empty($csvData[6]) ? $csvData[6] : "";
-          $max_loa = !empty($csvData[7]) ? $csvData[7] : "N/A";
-          $max_beam = !empty($csvData[8]) ? $csvData[8] : "N/A";
-          $depth_alognside = !empty($csvData[9]) ? $csvData[9] : "N/A";
-          $max_sailing_draft = !empty($csvData[10]) ? $csvData[10] : "N/A";
-          $airdraft = !empty($csvData[11]) ? $csvData[11] : "N/A";
-          $storage_capacity = !empty($csvData[12]) ? $csvData[12] : "N/A";
-          $loading_rate = !empty($csvData[13]) ? $csvData[13] : "N/A";
-          $method_of_loading = !empty($csvData[14]) ? $csvData[14] : "N/A";
-          $frontage = !empty($csvData[15]) ? $csvData[15] : "N/A";
-          $tide_restriction = !empty($csvData[16]) ? $csvData[16] : "N/A";
-          $sailing_restriction = !empty($csvData[17]) ? $csvData[17] : "N/A";
-          $average_congestion = !empty($csvData[18]) ? $csvData[18] : "N/A";
-          $bunkers = !empty($csvData[19]) ? $csvData[19] : "N/A";
-          $water_availability = !empty($csvData[20]) ? $csvData[20] : "N/A";
-          $garbage_disposal = !empty($csvData[21]) ? $csvData[21] : "N/A";
-          $crushing = !empty($csvData[22]) ? $csvData[22] : "N/A";
-          $truck = !empty($csvData[23]) ? $csvData[23] : "";
+          $dock = !empty($csvData[2]) ? $csvData[2] : NULL;
+          $daily_draft_mts = !empty($csvData[3]) ? $csvData[3] : NULL;
+          $daily_draft_feets = !empty($csvData[4]) ? $csvData[4] : NULL;
+          $water_density = !empty($csvData[5]) ? $csvData[5] : NULL;
+          $waiting_time = !empty($csvData[6]) ? $csvData[6] : NULL;
+          $waiting_time_projected = !empty($csvData[7]) ? $csvData[7] : NULL;
+          $max_loa = !empty($csvData[8]) ? $csvData[8] : NULL;
+          $max_beam = !empty($csvData[9]) ? $csvData[9] : NULL;
+          $depth_alognside = !empty($csvData[10]) ? $csvData[10] : NULL;
+          $max_draft = !empty($csvData[11]) ? $csvData[11] : NULL;
+          $airdraft = !empty($csvData[12]) ? $csvData[12] : NULL;
+          $storage_capacity = !empty($csvData[13]) ? $csvData[13] : NULL;
+          $loading_rates = !empty($csvData[14]) ? $csvData[14] : NULL;
+          $discharging_rates = !empty($csvData[15]) ? $csvData[15] : NULL;
+          $method_of_loading = !empty($csvData[16]) ? $csvData[16] : NULL;
+          $method_of_discharging = !empty($csvData[17]) ? $csvData[17] : NULL;
+          $frontage_dolphins = !empty($csvData[18]) ? $csvData[18] : NULL;
+          $tide_restriction = !empty($csvData[19]) ? $csvData[19] : NULL;
+          $night_arrival_sailing_restriction = !empty($csvData[20]) ? $csvData[20] : NULL;
+          $average_congestion = !empty($csvData[21]) ? $csvData[21] : NULL;
+          $bunkers = !empty($csvData[22]) ? $csvData[22] : NULL;
+          $water_availability = !empty($csvData[23]) ? $csvData[23] : NULL;
+          $garbage_collection_compulsory = !empty($csvData[25]) ? $csvData[25] : NULL;
+          $crushing_capacity = !empty($csvData[25]) ? $csvData[25] : NULL;
+          $truck = !empty($csvData[26]) ? $csvData[26] : NULL;
 
           $wpdb->insert($tablename, array(
             'port' => $port,
             'terminal' => $terminal,
+            'dock' => $dock,
             'daily_draft_mts' => $daily_draft_mts,
             'daily_draft_feets' => $daily_draft_feets,
             'water_density' => $water_density,
@@ -319,38 +323,25 @@ class Ports_List extends WP_List_Table {
             'max_loa' => $max_loa,
             'max_beam' => $max_beam,
             'depth_alognside' => $depth_alognside,
-            'max_sailing_draft' => $max_sailing_draft,
+            'max_draft' => $max_draft,
             'airdraft' => $airdraft,
             'storage_capacity' => $storage_capacity,
-            'loading_rate' => $loading_rate,
+            'loading_rates' => $loading_rates,
+            'discharging_rates' => $discharging_rates,
             'method_of_loading' => $method_of_loading,
-            'frontage' => $frontage,
+            'method_of_discharging' => $method_of_discharging,
+            'frontage_dolphins' => $frontage_dolphins,
             'tide_restriction' => $tide_restriction,
-            'sailing_restriction' => $sailing_restriction,
+            'night_arrival_sailing_restriction' => $night_arrival_sailing_restriction,
             'average_congestion' => $average_congestion,
             'bunkers' => $bunkers,
             'water_availability' => $water_availability,
-            'garbage_disposal' => $garbage_disposal,
-            'crushing' => $crushing,
+            'garbage_collection_compulsory' => $garbage_collection_compulsory,
+            'crushing_capacity' => $crushing_capacity,
             'truck' => $truck
           ));
         }
-        $this->uploaded_notice = 'La lista de puertos se actualizó correctamente.';
-      } else {
-        $this->uploaded_notice = 'This is not a valid request';
-        $this->notice_error = true;
       }
-    }
-  }
-
-  public function upload_notice() {
-    if(!empty($this->uploaded_notice)){
-      $class = $this->notice_error ? 'notice-error' : "notice-success"
-    ?>
-    <div class="notice is-dismissible <?php echo $class; ?>">
-        <p><?php echo $this->uploaded_notice; ?></p>
-    </div>
-    <?php
     }
   }
 }
